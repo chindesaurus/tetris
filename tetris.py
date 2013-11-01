@@ -469,6 +469,7 @@ class Tetris():
             win - type:Window - the window for the tetris game
             delay - type:int - the speed in milliseconds for moving the shapes
             current_shape - type: Shape - the current moving shape on the board
+            paused - type: boolean - whether or not the game is currently paused
     '''
     SHAPES = [I_shape, J_shape, L_shape, O_shape, S_shape, T_shape, Z_shape]
     DIRECTION = {'Left':(-1, 0), 'Right':(1, 0), 'Down':(0, 1)}
@@ -491,7 +492,10 @@ class Tetris():
         # draw the current_shape on the board
         Board.draw_shape(self.board, self.current_shape)
 
-        # For Step 9:  animate the shape!
+        # the game is initially not paused
+        self.paused = False
+
+        # animate the shape!
         self.animate_shape()
 
 
@@ -533,9 +537,11 @@ class Tetris():
     
     def animate_shape(self):
         ''' Animate the shape - move down at equal intervals
-            specified by the delay attribute.
+            specified by the delay attribute so long as the 
+            game is not paused.
         '''
-        self.do_move('Down')
+        if not self.paused:
+            self.do_move('Down')
         self.win.after(self.delay, self.animate_shape)
    
  
@@ -609,18 +615,23 @@ class Tetris():
         key = event.keysym
         #print key   # for debugging
 
-        # move left, right, and down
-        if key in self.DIRECTION: 
-            self.do_move(key)
+        if not self.paused:
+            # move left, right, and down
+            if key in self.DIRECTION: 
+                self.do_move(key)
 
-        # drop piece
-        elif key == "space":
-            while (self.current_shape.can_move(self.board, 0, 1)):
-                self.current_shape.move(0, 1)
+            # drop piece
+            elif key == "space":
+                while (self.current_shape.can_move(self.board, 0, 1)):
+                    self.current_shape.move(0, 1)
 
-        # rotate 
-        elif key == "Up":
-            self.do_rotate()
+            # rotate 
+            elif key == "Up":
+                self.do_rotate()
+
+        # pause and unpause the game
+        if key == 'p' or key == 'P':
+            self.paused = not self.paused
 
        
 ################################################################

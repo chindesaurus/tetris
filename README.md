@@ -9,7 +9,7 @@ Usage: python tetris.py
 Controls:  
 Left, Right, and Down arrow keys move blocks  
 Up arrow key rotates blocks (clockwise)   
-Space bar drops blocks
+Space bar drops blocks  
 P or p to pause game  
 
 ![screenshot](https://raw.github.com/chindesaurus/tetris/master/screenshot.png)

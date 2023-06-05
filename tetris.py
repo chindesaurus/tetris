@@ -5,7 +5,11 @@ Usage: python tetris.py
 
 @author chindesaurus
 '''
+from __future__ import division
 
+from builtins import range
+from past.utils import old_div
+from builtins import object
 from graphics import *
 import random
 
@@ -70,7 +74,7 @@ class Block(Rectangle):
 # SHAPE CLASS
 ############################################################
 
-class Shape():
+class Shape(object):
     ''' Shape class:
         Base class for all the tetris shapes
         Attributes: blocks - type: list - the list of blocks making up the shape
@@ -291,7 +295,7 @@ class Z_shape(Shape):
 # BOARD CLASS
 ############################################################
 
-class Board():
+class Board(object):
     ''' Board class: it represents the Tetris board
 
         Attributes: width - type:int - width of the board in squares
@@ -458,7 +462,7 @@ class Board():
 # TETRIS CLASS
 ############################################################
 
-class Tetris():
+class Tetris(object):
     ''' Tetris class: Controls the game play
         Attributes:
             SHAPES - type: list (list of Shape classes)
@@ -514,7 +518,7 @@ class Tetris():
         shape = Tetris.SHAPES[index]
 
         # center the shape at this point
-        point = Point(int(self.BOARD_WIDTH / 2), 0)
+        point = Point(int(old_div(self.BOARD_WIDTH, 2)), 0)
 
         if shape == I_shape:
             ref = I_shape(point)
